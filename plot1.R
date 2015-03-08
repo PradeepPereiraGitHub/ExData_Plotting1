@@ -13,6 +13,8 @@ test$Sub_metering_1 <- as.numeric(test$Sub_metering_1)
 test$Sub_metering_2 <- as.numeric(test$Sub_metering_2)
 test$Sub_metering_3 <- as.numeric(test$Sub_metering_3)
 
+png(file = "plot1.png")
+
 hist(test$Global_active_power,col="red", main="Global Active Power", xlab="Global Active Power (kilowatts)")
-dev.copy(png, file="plot1.png")
+#dev.copy(png, file="plot1.png")
 dev.off()

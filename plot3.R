@@ -17,7 +17,7 @@ test$Sub_metering_3 <- as.numeric(test$Sub_metering_3)
 # plot(test$Time,test$Sub_metering_1,xlab="", ylab="Energy sub metering",type="s", col="black", ylim=c(0,40))
 # plot(test$Time,test$Sub_metering_2,xlab="", ylab="Energy sub metering",type="s", col="red", ylim=c(0,40))
 # plot(test$Time,test$Sub_metering_3,xlab="", ylab="Energy sub metering",type="s", col="blue", ylim=c(0,40))
-
+png(file = "plot3.png")
 
 with(test,plot(Time,Sub_metering_1,xlab="", ylab="Energy sub metering",type="s", col="black", ylim=c(0,40)))
 with(subset(test, Sub_metering_1>=0), lines(Time, Sub_metering_1, col = "black"))
@@ -34,5 +34,5 @@ legend("topright", pch = "_", col=c("black","red","blue"),legend=c("Sub_metering
 #    
 # legend("topright", pch = "_", col=c("black","red","blue"),legend=c("Sub_metering_1","Sub_metering_2","Sub_metering_3"))
 
-dev.copy(png, file="plot3.png")
+#dev.copy(png, file="plot3.png")
 dev.off()

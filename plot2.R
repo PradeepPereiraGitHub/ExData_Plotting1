@@ -13,7 +13,8 @@ test$Sub_metering_1 <- as.numeric(test$Sub_metering_1)
 test$Sub_metering_2 <- as.numeric(test$Sub_metering_2)
 test$Sub_metering_3 <- as.numeric(test$Sub_metering_3)
 
+png(file = "plot2.png")
 
 plot(test$Time,test$Global_active_power,xlab="", ylab="Global Active Power (kilowatts)",type="s")
-dev.copy(png, file="plot2.png")
+#dev.copy(png, file="plot2.png")
 dev.off()

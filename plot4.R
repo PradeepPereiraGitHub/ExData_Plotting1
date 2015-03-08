@@ -12,6 +12,9 @@ test$Global_active_power <- as.numeric(test$Global_active_power)
 test$Sub_metering_1 <- as.numeric(test$Sub_metering_1)
 test$Sub_metering_2 <- as.numeric(test$Sub_metering_2)
 test$Sub_metering_3 <- as.numeric(test$Sub_metering_3)
+
+png(file = "plot4.png")
+
 par(mfrow=c(2,2))
 with(test,
 {
@@ -22,11 +25,11 @@ with(test,plot(Time,Sub_metering_1,xlab="", ylab="Energy sub metering",type="s",
 with(subset(test, Sub_metering_1>=0), lines(Time, Sub_metering_1, col = "black"))
 with(subset(test, Sub_metering_2>=0), lines(Time, Sub_metering_2, col = "red"))
 with(subset(test, Sub_metering_3>=0), lines(Time, Sub_metering_3, col = "blue"))
-#legend("topright", pch = "_", col=c("black","red","blue"),legend=c("Sub_metering_1","Sub_metering_2","Sub_metering_3"))
+legend("topright", pch = "_", col=c("black","red","blue"),legend=c("Sub_metering_1","Sub_metering_2","Sub_metering_3"))
 
 plot(test$Time,test$Global_reactive_power,xlab="datetime", ylab="Global_reactive_power",type="s")
 }
 )
 
-dev.copy(png, file="plot4.png")
+#dev.copy(png, file="plot4.png")
 dev.off()
