@@ -17,8 +17,23 @@ test$Sub_metering_3 <- as.numeric(test$Sub_metering_3)
 #test$Sub_metering_3 <- as.numeric(levels(test$Sub_metering_3))[test$Sub_metering_3]
 
 #Write plot to .png file
-png(file = "plot2.png")
+png(file = "plot4.png")
 
+par(mfrow=c(2,2))
+with(test,
+{
 plot(test$Time,test$Global_active_power,xlab="", ylab="Global Active Power (kilowatts)",type="s")
-#dev.copy(png, file="plot2.png")
+plot(test$Time,test$Voltage,xlab="datetime", ylab="Voltage",type="s")
+
+with(test,plot(Time,Sub_metering_1,xlab="", ylab="Energy sub metering",type="s", col="black" ))
+with(subset(test, Sub_metering_1>=0), lines(Time, Sub_metering_1, col = "black"))
+with(subset(test, Sub_metering_2>=0), lines(Time, Sub_metering_2, col = "red"))
+with(subset(test, Sub_metering_3>=0), lines(Time, Sub_metering_3, col = "blue"))
+legend("topright", box.lty=0, pch = "_", col=c("black","red","blue"),legend=c("Sub_metering_1","Sub_metering_2","Sub_metering_3"),inset=0.01)
+
+plot(test$Time,test$Global_reactive_power,xlab="datetime", ylab="Global_reactive_power",type="s")
+}
+)
+
+#dev.copy(png, file="plot4.png")
 dev.off()
