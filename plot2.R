@@ -1,24 +1,23 @@
-library(dplyr)
 
-PowerData <- read.table("./household_power_consumption.txt",header = TRUE, sep=";", colClasses="character")
-PowerData<-tbl_df(PowerData)
-PowerData$Date <- as.Date(PowerData$Date,format="%d/%m/%Y")
-test<-PowerData[PowerData$Date == ("2007-02-01") | PowerData$Date == ("2007-02-02"),]
+#Read the data in
+# NEI <- readRDS("./exdata_data_NEI_data/summarySCC_PM25.rds")
+# SCC <- readRDS("./exdata_data_NEI_data/Source_Classification_Code.rds")
 
-test$Time <- as.POSIXct(paste(test$Date, test$Time), format="%Y-%m-%d %H:%M:%S")
-#str(test)
+#Subset just the emissions for Baltimore
+NEIBaltimore <- NEI[NEI$fips=="24510",]
+#Aggregate all the emissions by year and sum them
+NEITotalsByYearBaltimore <- aggregate(Emissions ~ year,NEIBaltimore,sum)
 
-test$Global_active_power <- as.numeric(test$Global_active_power)
-test$Sub_metering_1 <- as.numeric(test$Sub_metering_1)
-#test$Sub_metering_1 <- as.numeric(levels(test$Sub_metering_1))[test$Sub_metering_1]
-test$Sub_metering_2 <- as.numeric(test$Sub_metering_2)
-#test$Sub_metering_2 <- as.numeric(levels(test$Sub_metering_2))[test$Sub_metering_2]
-test$Sub_metering_3 <- as.numeric(test$Sub_metering_3)
-#test$Sub_metering_3 <- as.numeric(levels(test$Sub_metering_3))[test$Sub_metering_3]
+#Using the base plotting system, make a plot for NEI data for Baltimore
+#for each of the years 1999, 2002, 2005, and 2008.
 
-#Write plot to .png file
-png(file = "plot2.png")
+#Save the plot to a png file
 
-plot(test$Time,test$Global_active_power,xlab="", ylab="Global Active Power (kilowatts)",type="s")
-#dev.copy(png, file="plot2.png")
+png("./GitHub/ExData_Plotting2/plot2.png",width=480,height=480,units="px",bg="transparent")
+
+plot(NEITotalsByYearBaltimore,pch = 17,col = "red", type="b", 
+     xlab="Year", ylab="Total PM2.5 Emissions(tons)", 
+     main="Total PM2.5 Emissions For Baltimore By Year"
+)
+
 dev.off()

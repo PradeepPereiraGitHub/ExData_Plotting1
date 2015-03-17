@@ -1,23 +1,21 @@
-library(dplyr)
 
-PowerData <- read.table("./household_power_consumption.txt",header = TRUE, sep=";", colClasses="character")
-PowerData<-tbl_df(PowerData)
-PowerData$Date <- as.Date(PowerData$Date,format="%d/%m/%Y")
-test<-PowerData[PowerData$Date == ("2007-02-01") | PowerData$Date == ("2007-02-02"),]
+#Read the data in
+NEI <- readRDS("./exdata_data_NEI_data/summarySCC_PM25.rds")
+SCC <- readRDS("./exdata_data_NEI_data/Source_Classification_Code.rds")
 
-test$Time <- as.POSIXct(paste(test$Date, test$Time), format="%Y-%m-%d %H:%M:%S")
-#str(test)
+#Aggregate all the emissions by year and sum them
+NEITotalsByYear <- aggregate(Emissions ~ year,NEI,sum)
 
-test$Global_active_power <- as.numeric(test$Global_active_power)
-test$Sub_metering_1 <- as.numeric(test$Sub_metering_1)
-#test$Sub_metering_1 <- as.numeric(levels(test$Sub_metering_1))[test$Sub_metering_1]
-test$Sub_metering_2 <- as.numeric(test$Sub_metering_2)
-#test$Sub_metering_2 <- as.numeric(levels(test$Sub_metering_2))[test$Sub_metering_2]
-test$Sub_metering_3 <- as.numeric(test$Sub_metering_3)
-#test$Sub_metering_3 <- as.numeric(levels(test$Sub_metering_3))[test$Sub_metering_3]
+#Using the base plotting system, make a plot showing the total PM2.5 emissions
+#from all sources for each of the years 1999, 2002, 2005, and 2008.
 
-png(file = "plot1.png")
+#Save the plot to a png file
 
-hist(test$Global_active_power,col="red", main="Global Active Power", xlab="Global Active Power (kilowatts)")
-#dev.copy(png, file="plot1.png")
+png("./GitHub/ExData_Plotting2/plot1.png",width=480,height=480,units="px",bg="transparent")
+
+plot(NEITotalsByYear,pch = 17,col = "blue", type="b", 
+     xlab="Year", ylab="Total PM2.5 Emissions(tons)", 
+     main="Total PM2.5 Emissions For U.S.A By Year"
+)
+
 dev.off()
